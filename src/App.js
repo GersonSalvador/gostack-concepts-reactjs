@@ -8,18 +8,18 @@ function App() {
   const [repositories, setRepositories] = useState([]);
   
   useEffect(()=>{
-    api.get('repositories').then((response) => {
+    api.get('/repositories').then((response) => {
       setRepositories(response.data)
     })
-  })
+  },[])
   async function handleAddRepository() {
     const repo = {
-      title: 'New Repository ' + Date.now(),
-      url: 'localhost',
+      title: 'New Repository ',
+      url: 'http://github.com/gersonsalvador',
       techs: ['new', 'nuevo', 'novo']
     }
 
-    const response = await api.post('repositories',repo)
+    const response = await api.post('/repositories',repo)
 
     setRepositories([...repositories,response.data])
 
@@ -27,8 +27,10 @@ function App() {
 
   async function handleRemoveRepository(id) {
     
-    const response = await api.delete('repositories/'+id)
-    console.log(response)
+    const response = await api.delete('/repositories/'+id)
+    if (response.status === 204) {
+      setRepositories(repositories.filter(repository => repository.id !== id));
+    }
   }
 
   return (
