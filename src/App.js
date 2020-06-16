@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from "react";
-import axios from 'axios';
+import api from './services/api';
 
 import "./styles.css";
-
-const api = axios.create({
-  baseURL: 'http://localhost:3333'
-})
 
 function App() {
 
@@ -42,9 +38,7 @@ function App() {
           repositories.map((item) => (
             <li key={item.id}>
               {item.title}
-              <button onClick={() => handleRemoveRepository(item.id)}>
-                Remover
-              </button>
+              <button onClick={() => handleRemoveRepository(item.id)}>Remover</button>
             </li>
           ))
         }
