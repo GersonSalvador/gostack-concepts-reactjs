@@ -1,26 +1,53 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from 'axios';
 
 import "./styles.css";
 
+const api = axios.create({
+  baseURL: 'http://localhost:3333'
+})
+
 function App() {
+
+  const [repositories, setRepositories] = useState([]);
+  
+  useEffect(()=>{
+    api.get('repositories').then((response) => {
+      setRepositories(response.data)
+    })
+  })
   async function handleAddRepository() {
-    // TODO
+    const repo = {
+      title: 'New Repository ' + Date.now(),
+      url: 'localhost',
+      techs: ['new', 'nuevo', 'novo']
+    }
+
+    const response = await api.post('repositories',repo)
+
+    setRepositories([...repositories,response.data])
+
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    
+    const response = await api.delete('repositories/'+id)
+    console.log(response)
   }
 
   return (
     <div>
       <ul data-testid="repository-list">
-        <li>
-          Repositório 1
-
-          <button onClick={() => handleRemoveRepository(1)}>
-            Remover
-          </button>
-        </li>
+        {
+          repositories.map((item) => (
+            <li key={item.id}>
+              {item.title}
+              <button onClick={() => handleRemoveRepository(item.id)}>
+                Remover
+              </button>
+            </li>
+          ))
+        }
       </ul>
 
       <button onClick={handleAddRepository}>Adicionar</button>
