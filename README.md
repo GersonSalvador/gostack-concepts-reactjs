@@ -2,7 +2,7 @@
 
 This app interacts with the API we created before for store your repositories. You even can give them a like.
 
-## :rocket: ## Abtout the chalanged
+## :rocket:  Abtout the chalanged
 
 Chalenged by RockeSeat for BootCamp GoStack
 
